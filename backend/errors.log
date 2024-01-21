@@ -116,3 +116,5 @@
 [31mfatal[39m: GET es /api/carts/65a494afa806c467f917b347/products - 23:38:29
 [31mfatal[39m: POST es /api/carts/65a49f7c2b0bd48129c7148f/checkout - 02:01:26
 [31mfatal[39m: POST es /api/carts/65a49f7c2b0bd48129c7148f/checkout - 02:01:26
+[31mfatal[39m: POST es /api/carts/65a605ee998771ceea5a53c4/purcharse - 03:12:29
+[31mfatal[39m: POST es /api/carts/65a605ee998771ceea5a53c4/purcharse - 03:12:29

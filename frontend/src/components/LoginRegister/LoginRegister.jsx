@@ -1,7 +1,8 @@
 import { useState, useRef, useContext } from "react";
-import "./LoginRegister.scss";
+import "../LoginRegister/LoginRegister.scss";
 import { useNavigate } from "react-router-dom";
 import { LogContext } from "../LogContext";
+/*import { useAuth } from "../Authent/AuthContext";  // Importar el contexto*/
 
 const LoginRegister = () => {
   const [isLoginFormVisible, setLoginFormVisible] = useState(true);
@@ -10,6 +11,7 @@ const LoginRegister = () => {
   const toggleForm = () => {
     setLoginFormVisible(!isLoginFormVisible);
   };
+  /*const { login } = useAuth();  // Obtener la función de login del contexto*/
   const navigate = useNavigate();
   const { setIsLogeado } = useContext(LogContext);
   const loginFormRef = useRef(null);
@@ -37,9 +39,15 @@ const LoginRegister = () => {
 
     if (response.status === 200) {
       const datos = await response.json();
+      console.log(datos);
+      /*const usermail = datos.email
+      ObtenerCart ( datos.email )*/
+    
+      /*login(userData);  // Almacena la información del usuario en el contexto*/
       document.cookie = `jwtCookie=${datos.token}; expires=${new Date(
         Date.now() + 1 * 24 * 60 * 60 * 1000
       ).toUTCString()};path=/;`;
+     
       setIsLogeado(true);
       navigate("/products");
     } else {

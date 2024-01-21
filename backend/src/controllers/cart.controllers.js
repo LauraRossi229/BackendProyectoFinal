@@ -139,7 +139,7 @@ export const putCarritoByProducId = async (req, res) => {
     const cart = await cartModel.findById(cid);
 
     if (!cart) {
-      res.status(404).send({
+      return res.status(404).send({
         respuesta: "Carrito no encontrado",
         mensaje: "Not Found",
       });
@@ -148,7 +148,7 @@ export const putCarritoByProducId = async (req, res) => {
     const product = await productModel.findById(pid);
 
     if (!product) {
-      res.status(404).send({
+      return res.status(404).send({
         respuesta: "Producto no encontrado",
         mensaje: "Not Found",
       });
@@ -159,21 +159,25 @@ export const putCarritoByProducId = async (req, res) => {
     );
 
     if (indice !== -1) {
-      cart.products[indice].quantity = quantity;
+      // Verifica si quantity está definido antes de asignarlo
+      if (quantity !== undefined) {
+        cart.products[indice].quantity = quantity;
+      }
     } else {
       cart.products.push({ id_prod: pid, quantity: quantity });
     }
 
-    await cart.save();
+    // Utiliza save() en lugar de findByIdAndUpdate para que se apliquen las validaciones
+    const updatedCart = await cart.save();
 
-    res.status(200).send({
+    return res.status(200).send({
       respuesta: "OK",
       mensaje: "Carrito actualizado",
-      carrito: cart,
+      carrito: updatedCart,
     });
   } catch (error) {
     console.error(error);
-    res.status(500).send({
+    return res.status(500).send({
       respuesta: "Error",
       mensaje: "Ha ocurrido un error en el servidor",
     });

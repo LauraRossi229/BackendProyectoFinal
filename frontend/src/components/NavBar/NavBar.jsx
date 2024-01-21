@@ -5,7 +5,7 @@ import {
   FaArrowRightToBracket,
   FaBagShopping,
 } from "react-icons/fa6";
-import "./NavBar.scss";
+import '../NavBar/NavBar.scss';
 import { Link, useNavigate } from "react-router-dom";
 import { LogContext } from "../LogContext";
 

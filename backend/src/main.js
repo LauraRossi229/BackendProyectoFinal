@@ -1,3 +1,4 @@
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 1;
 import "dotenv/config";
 import express from "express";
 import cors from "cors";

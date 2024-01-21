@@ -1,0 +1,679 @@
+{
+	"info": {
+		"_postman_id": "e90ef2cb-a17c-436a-a646-da0e49577f8f",
+		"name": "Test-Backend",
+		"description": "Test para Proyecto Final Programación Backend - Coderhouse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29103749"
+	},
+	"item": [
+		{
+			"name": "Sessions",
+			"item": [
+				{
+					"name": "Register Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.environment.set(\"jwt_token\", response.token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\": \"Panchito\",\r\n    \"last_name\": \"Panchito\",\r\n    \"email\": \"panchito@panchito.com\",\r\n    \"age\": 35,\r\n    \"password\":\"coderhouse\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/sessions/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"sessions",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \r\n  \"email\": \"panchito@panchito.com\",\r\n  \"password\": \"coderhouse\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/sessions/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"sessions",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Current Session",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1YTYwNTc0OTk4NzcxY2VlYTVhNTNiZiIsImZpcnN0X25hbWUiOiJQYW5jaGl0byIsImxhc3RfbmFtZSI6IlBhbmNoaXRvIiwiYWdlIjozNSwiZW1haWwiOiJwYW5jaGl0b0BwYW5jaGl0by5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRQaHlvRmhRdDBmTjN4YjlPQ1Zpdk11OHJ3M0JDVVg4Yi4wRDhFLlZ0TXJBZW9BQ0h5a0d2TyIsInJvbCI6InVzZXIiLCJsYXN0X2Nvbm5lY3Rpb24iOiIyMDI0LTAxLTE2VDA0OjI4OjMwLjMxNloiLCJkb2N1bWVudHMiOltdLCJjYXJ0IjoiNjVhNjA1ZWU5OTg3NzFjZWVhNWE1M2M0IiwiX192IjowfSwiaWF0IjoxNzA1Mzc5MzEwLCJleHAiOjE3MDU0MjI1MTB9.5M53nOrDIryZOaZCGI7ujt6qKG2tuwESouAAbeC7ASc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/sessions/current",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"sessions",
+								"current"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1YTQzNzE2OWUwMmM2NWUwZTIwYThmYiIsImZpcnN0X25hbWUiOiJQYW5jaGl0byIsImxhc3RfbmFtZSI6IlBlcmV6IiwiYWdlIjoyNSwiZW1haWwiOiJwZXJlekBwZXJlei5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQySlV5M1A5MkRHdnllUk5wREpuRUUuZ2FvbUJkT2s4VTc0THlVa2N5UkNpYXEzclVFWGxEcSIsInJvbCI6ImFkbWluIiwibGFzdF9jb25uZWN0aW9uIjoiMjAyNC0wMS0xNVQwMDoxMTo1MC4zMzlaIiwiZG9jdW1lbnRzIjpbXSwiY2FydCI6IjY1YTQ3ODQ2MzEzMzA3NDNhMjRmMTkzZSIsIl9fdiI6MH0sImlhdCI6MTcwNTI3NzUxMCwiZXhwIjoxNzA1MzIwNzEwfQ.9uwP4a9Bc1MXq544VXgkfA-tSz30DOsUuwFvtSm_v20",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products?limit=&page=&sort&category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": ""
+								},
+								{
+									"key": "page",
+									"value": ""
+								},
+								{
+									"key": "sort",
+									"value": null
+								},
+								{
+									"key": "category",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1YTQzNzE2OWUwMmM2NWUwZTIwYThmYiIsImZpcnN0X25hbWUiOiJQYW5jaGl0byIsImxhc3RfbmFtZSI6IlBlcmV6IiwiYWdlIjoyNSwiZW1haWwiOiJwZXJlekBwZXJlei5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQySlV5M1A5MkRHdnllUk5wREpuRUUuZ2FvbUJkT2s4VTc0THlVa2N5UkNpYXEzclVFWGxEcSIsInJvbCI6ImFkbWluIiwibGFzdF9jb25uZWN0aW9uIjoiMjAyNC0wMS0xNlQwNDozNzoyMi4yOThaIiwiZG9jdW1lbnRzIjpbXSwiY2FydCI6IjY1YTYwODAyOTk4NzcxY2VlYTVhNTNjYSIsIl9fdiI6MH0sImlhdCI6MTcwNTM3OTg0MiwiZXhwIjoxNzA1NDIzMDQyfQ.5uAmJh0D31jhTmUcz30KwbqpyZfxeeaT2oxDMXzh9j4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Curso prueba\",\r\n    \"description\": \"Curso nuevo de prueba\",\r\n    \"price\": 250,\r\n    \"stock\": 40,\r\n    \"code\": \"JJOO01\",\r\n    \"category\": \"Idiomas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1YTQzNzE2OWUwMmM2NWUwZTIwYThmYiIsImZpcnN0X25hbWUiOiJQYW5jaGl0byIsImxhc3RfbmFtZSI6IlBlcmV6IiwiYWdlIjoyNSwiZW1haWwiOiJwZXJlekBwZXJlei5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQySlV5M1A5MkRHdnllUk5wREpuRUUuZ2FvbUJkT2s4VTc0THlVa2N5UkNpYXEzclVFWGxEcSIsInJvbCI6ImFkbWluIiwibGFzdF9jb25uZWN0aW9uIjoiMjAyNC0wMS0xNlQwNDozNzoyMi4yOThaIiwiZG9jdW1lbnRzIjpbXSwiY2FydCI6IjY1YTYwODAyOTk4NzcxY2VlYTVhNTNjYSIsIl9fdiI6MH0sImlhdCI6MTcwNTM3OTg0MiwiZXhwIjoxNzA1NDIzMDQyfQ.5uAmJh0D31jhTmUcz30KwbqpyZfxeeaT2oxDMXzh9j4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Curso prueba con cambios\",\r\n    \"description\": \"Curso nuevo de prueba\",\r\n    \"price\": 250,\r\n    \"stock\": 25,\r\n    \"code\": \"JJOO01\",\r\n    \"category\": \"Idiomas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/65a608ce998771ceea5a53cf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"65a608ce998771ceea5a53cf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1YTQzNzE2OWUwMmM2NWUwZTIwYThmYiIsImZpcnN0X25hbWUiOiJQYW5jaGl0byIsImxhc3RfbmFtZSI6IlBlcmV6IiwiYWdlIjoyNSwiZW1haWwiOiJwZXJlekBwZXJlei5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQySlV5M1A5MkRHdnllUk5wREpuRUUuZ2FvbUJkT2s4VTc0THlVa2N5UkNpYXEzclVFWGxEcSIsInJvbCI6ImFkbWluIiwibGFzdF9jb25uZWN0aW9uIjoiMjAyNC0wMS0xNlQwNDozNzoyMi4yOThaIiwiZG9jdW1lbnRzIjpbXSwiY2FydCI6IjY1YTYwODAyOTk4NzcxY2VlYTVhNTNjYSIsIl9fdiI6MH0sImlhdCI6MTcwNTM3OTg0MiwiZXhwIjoxNzA1NDIzMDQyfQ.5uAmJh0D31jhTmUcz30KwbqpyZfxeeaT2oxDMXzh9j4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/products/65a608ce998771ceea5a53cf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"65a608ce998771ceea5a53cf"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1YTQzNzE2OWUwMmM2NWUwZTIwYThmYiIsImZpcnN0X25hbWUiOiJQYW5jaGl0byIsImxhc3RfbmFtZSI6IlBlcmV6IiwiYWdlIjoyNSwiZW1haWwiOiJwZXJlekBwZXJlei5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQySlV5M1A5MkRHdnllUk5wREpuRUUuZ2FvbUJkT2s4VTc0THlVa2N5UkNpYXEzclVFWGxEcSIsInJvbCI6ImFkbWluIiwibGFzdF9jb25uZWN0aW9uIjoiMjAyNC0wMS0xNVQwMTowMzowMS41ODlaIiwiZG9jdW1lbnRzIjpbXSwiY2FydCI6IjY1YTQ4NDQ1YjljYTA5N2UwOTZkNjYxMiIsIl9fdiI6MH0sImlhdCI6MTcwNTI4MDU4MSwiZXhwIjoxNzA1MzIzNzgxfQ.tW98TwM1KsxekvYsKj3_uuxTHb_zjkow0gRIKSOQVrU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1YTQzNzE2OWUwMmM2NWUwZTIwYThmYiIsImZpcnN0X25hbWUiOiJQYW5jaGl0byIsImxhc3RfbmFtZSI6IlBlcmV6IiwiYWdlIjoyNSwiZW1haWwiOiJwZXJlekBwZXJlei5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQySlV5M1A5MkRHdnllUk5wREpuRUUuZ2FvbUJkT2s4VTc0THlVa2N5UkNpYXEzclVFWGxEcSIsInJvbCI6ImFkbWluIiwibGFzdF9jb25uZWN0aW9uIjoiMjAyNC0wMS0xNlQwNDozNzoyMi4yOThaIiwiZG9jdW1lbnRzIjpbXSwiY2FydCI6IjY1YTYwODAyOTk4NzcxY2VlYTVhNTNjYSIsIl9fdiI6MH0sImlhdCI6MTcwNTM3OTg0MiwiZXhwIjoxNzA1NDIzMDQyfQ.5uAmJh0D31jhTmUcz30KwbqpyZfxeeaT2oxDMXzh9j4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Carts",
+			"item": [
+				{
+					"name": "Get Carts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1YTQzNzE2OWUwMmM2NWUwZTIwYThmYiIsImZpcnN0X25hbWUiOiJQYW5jaGl0byIsImxhc3RfbmFtZSI6IlBlcmV6IiwiYWdlIjoyNSwiZW1haWwiOiJwZXJlekBwZXJlei5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQySlV5M1A5MkRHdnllUk5wREpuRUUuZ2FvbUJkT2s4VTc0THlVa2N5UkNpYXEzclVFWGxEcSIsInJvbCI6ImFkbWluIiwibGFzdF9jb25uZWN0aW9uIjoiMjAyNC0wMS0xNVQwMTowMzowMS41ODlaIiwiZG9jdW1lbnRzIjpbXSwiY2FydCI6IjY1YTQ4NDQ1YjljYTA5N2UwOTZkNjYxMiIsIl9fdiI6MH0sImlhdCI6MTcwNTI4MDU4MSwiZXhwIjoxNzA1MzIzNzgxfQ.tW98TwM1KsxekvYsKj3_uuxTHb_zjkow0gRIKSOQVrU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/carts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Product Cart",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carts/657bcc0f8e7ab9d4c226ac7a/products/64fca7e15b100d5e10f55853",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"657bcc0f8e7ab9d4c226ac7a",
+								"products",
+								"64fca7e15b100d5e10f55853"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Carts Products",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"productId\": \"\",\r\n        \"quantity\": 2\r\n    },\r\n    {\r\n        \"productId\": \"\",\r\n        \"quantity\": 5\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/carts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product Quantity",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carts/65a605ee998771ceea5a53c4/products/64fc9d5757bf07a2a2d48e71",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"65a605ee998771ceea5a53c4",
+								"products",
+								"64fc9d5757bf07a2a2d48e71"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Ticket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/65a494afa806c467f917b347",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"65a494afa806c467f917b347"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Cart Products",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/carts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Cart Product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/carts/product/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"carts",
+								"product",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/api/carts/65a605ee998771ceea5a53c4/products/64fca7e15b100d5e10f55853",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"products\": [\r\n    {\r\n      \"id_prod\": \"64fca7e15b100d5e10f55853\",\r\n      \"quantity\":2\r\n    },\r\n    {\r\n      \"id_prod\": \"64fca7c65b100d5e10f55851\",\r\n      \"quantity\":1\r\n    }\r\n  ]\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carts/65a605ee998771ceea5a53c4/products/64fca7e15b100d5e10f55853",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"65a605ee998771ceea5a53c4",
+								"products",
+								"64fca7e15b100d5e10f55853"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

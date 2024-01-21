@@ -1,25 +1,37 @@
-import { useEffect, useState } from "react";
-import ProductCard from "../ProductCard/ProductCard";
+import React, { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
+import ProductCard from "../ProductCard/ProductCard";
 
 const Products = () => {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/products")
-      .then((response) => response.json())
-      .then((data) => setProductos(data.docs))
-      .catch((error) => console.log(error));
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/products");
+        if (response.ok) {
+          const data = await response.json();
+          setProductos(data.docs);
+        } else {
+          console.error("Error al obtener productos");
+        }
+      } catch (error) {
+        console.error("Error en la solicitud:", error);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   return (
     <div className="container">
       <Row>
+      {console.log(productos)}
         {productos.map((producto) => (
           <ProductCard key={producto._id} {...producto} />
         ))}
       </Row>
-      
+      {/* ... (puedes agregar más contenido según sea necesario) */}
     </div>
   );
 };
