@@ -13,7 +13,7 @@ const LoginRegister = () => {
   };
   /*const { login } = useAuth();  // Obtener la función de login del contexto*/
   const navigate = useNavigate();
-  const { setIsLogeado } = useContext(LogContext);
+  const { setIsLogeado, setCartId } = useContext(LogContext);
   const loginFormRef = useRef(null);
   const registerFormRef = useRef(null);
 
@@ -37,6 +37,7 @@ const LoginRegister = () => {
       body: JSON.stringify(data),
     });
 
+    
     if (response.status === 200) {
       const datos = await response.json();
       console.log(datos);
@@ -47,8 +48,20 @@ const LoginRegister = () => {
       document.cookie = `jwtCookie=${datos.token}; expires=${new Date(
         Date.now() + 1 * 24 * 60 * 60 * 1000
       ).toUTCString()};path=/;`;
+
+        const token = datos.token
+        // Decodificar el token JWT
+        const tokenParts = token.split('.');
+        const encodedPayload = tokenParts[1];
+        const decodedPayload = JSON.parse(atob(encodedPayload));
+        
+        // Obtener el campo 'cart' desde el objeto decodificado
+        const cartId = decodedPayload.user.cart;
+        
+        console.log("Información del carrito:", cartId);
      
       setIsLogeado(true);
+      setCartId(cartId);
       navigate("/products");
     } else {
       console.log(response);
@@ -58,7 +71,7 @@ const LoginRegister = () => {
   const handleSubmit2 = async (e) => {
     e.preventDefault();
     const formData = new FormData(registerFormRef.current);
-
+  
     // Crear un objeto para almacenar solo los campos del formulario de registro
     const data = {
       first_name: formData.get("first_name"),
@@ -67,22 +80,28 @@ const LoginRegister = () => {
       age: formData.get("age"),
       password: formData.get("password"),
     };
-
-    console.log(data);
-
-    const response = await fetch(
-      "http://localhost:8080/api/sessions/register",
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
-
-    console.log(response);
-  };
+  
+    console.log("Registration data:", data);
+  
+    const response = await fetch("http://localhost:8080/api/sessions/register", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    
+    if (!response.ok) {
+      console.error("Registration failed. Status:", response.status);
+      const errorMessage = await response.text();
+      console.error("Error message:", errorMessage);
+      return;
+    }
+    
+    const responseData = await response.json();
+    console.log("Registration response:", responseData);
+    alert("Usuario regsitrado correctamente, logueese");
+  }    
 
   return (
     <section className="user">

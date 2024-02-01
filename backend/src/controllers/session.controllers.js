@@ -49,13 +49,19 @@ export const getGihubCallback = async (req, res) => {
 
 export const getLogout = async (req, res) => {
   try {
-    // Actualiza last_connection al momento del logout
-    req.user.last_connection = new Date();
-    await req.user.save();
+    // Verifica si req.user está definido antes de acceder a la propiedad
+    if (req.user) {
+      req.user.last_connection = new Date();
+      await req.user.save();
 
-    res.clearCookie("jwtCookie");
-    res.status(200).send({ resultado: "Usuario deslogueado" });
+      res.clearCookie("jwtCookie");
+      res.status(200).send({ resultado: "Usuario deslogueado" });
+    } else {
+      // Si req.user no está definido, devuelve un error
+      res.status(401).send({ mensaje: "Usuario no autenticado" });
+    }
   } catch (error) {
     res.status(500).send({ mensaje: `Error al desloguear usuario ${error}` });
   }
 };
+

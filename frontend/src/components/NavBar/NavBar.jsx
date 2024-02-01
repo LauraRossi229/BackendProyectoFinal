@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import {
   FaArrowRightFromBracket,
   FaArrowRightToBracket,
   FaBagShopping,
 } from "react-icons/fa6";
-import '../NavBar/NavBar.scss';
+import "./NavBar.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { LogContext } from "../LogContext";
 
@@ -13,17 +13,19 @@ const NavBar = () => {
   const { isLogeado, setIsLogeado } = useContext(LogContext);
   const navigate = useNavigate(null);
 
-  const handleLogout = async () => {
+  const handleLogout = async (e) => {
+    e.preventDefault();
     const response = await fetch("http://localhost:8080/api/sessions/logout", {
       method: "GET",
+      credentials: "include",
       headers: {
         "Content-type": "application/json",
       },
-      credentials: "include",
     });
 
-    if (response.status === 200) {
+    if (response.status == 200) {
       setIsLogeado(false);
+
       navigate("/");
     } else {
       console.error(
@@ -31,14 +33,17 @@ const NavBar = () => {
         response.status
       );
     }
+    navigate("usuario");
   };
 
   return (
     <>
       {["md"].map((expand) => (
-        <Navbar key={expand} expand={expand} className="bg-body-tertiary">
+        <Navbar key={expand} expand={expand} className="--nav">
           <Container fluid>
-            <Navbar.Brand href="/">PlanetPro Digital</Navbar.Brand>
+            <Navbar.Brand href="/" className="nav-brand">
+              Planet Pro Digital
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
@@ -52,11 +57,8 @@ const NavBar = () => {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Link to="" className="shoppingBag">
-                    <button data-quantity="0" className="btn-cart">
-                      <FaBagShopping className="bolsa" />
-                      <span className="quantity"></span>
-                    </button>
+                  <Link to="/productos" className="nav-item nav-link">
+                    Productos
                   </Link>
                   {isLogeado ? (
                     <Link>
@@ -77,6 +79,12 @@ const NavBar = () => {
                       </button>
                     </Link>
                   )}
+                  <Link to="/carrito" className="shoppingBag">
+                    <button data-quantity="0" className="btn-cart">
+                      <FaBagShopping className="bolsa" />
+                      <span className="quantity"></span>
+                    </button>
+                  </Link>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>

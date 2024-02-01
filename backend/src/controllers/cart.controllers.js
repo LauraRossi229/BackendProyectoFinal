@@ -15,10 +15,10 @@ export const getCarrito = async (req, res) => {
 };
 
 export const getCarritoById = async (req, res) => {
-  const { id } = req.params;
+  const { cid } = req.params;
 
   try {
-    const cart = await cartModel.findOne({ "mensaje._id": id });
+    const cart = await cartModel.findById(cid).populate("products.id_prod").exec();
 
     if (cart) {
       res.status(200).send({ respuesta: "OK", mensaje: cart });
@@ -34,6 +34,7 @@ export const getCarritoById = async (req, res) => {
       .send({ respuesta: "Error en consultar el carrito", mensaje: error });
   }
 };
+
 
 export const postCarrito = async (req, res) => {
   try {

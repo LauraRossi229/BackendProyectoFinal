@@ -7,7 +7,7 @@ const cartSchema = new Schema(
         {
           id_prod: {
             type: Schema.Types.ObjectId,
-            ref: "products",
+            ref: "products",  // Asegúrate de que la referencia coincida con el nombre del modelo de producto
             required: true,
           },
           quantity: {
@@ -30,4 +30,4 @@ cartSchema.pre("find", function (next) {
   next();
 });
 
-export const cartModel = model("cart", cartSchema);
+export const cartModel = model("Cart", cartSchema);  // Cambié el nombre del modelo a "Cart"

@@ -22,7 +22,7 @@ userRouter.get("/", passportError("jwt"), authorization("admin"), getUsers);
 userRouter.get(
   "/:id",
   passportError("jwt"),
-  authorization("admin"),
+  authorization("admin","user"),
   getUserbyId
 );
 
