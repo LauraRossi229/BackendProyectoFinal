@@ -36,28 +36,36 @@ const ProductDetail = () => {
       console.log("Cart Data:", cartData.mensaje.products); 
 
       let existingProduct;
-  
-      if (cartData && cartData.mensaje && Array.isArray(cartData.mensaje.products) && cartData.mensaje.products.length > 0) {
-        // Verifica que cartData y cartData.products no sean undefined y que tenga al menos un producto
+      if (Array.isArray(cartData.mensaje.products) && cartData.mensaje.products.length > 0) {
         existingProduct = cartData.mensaje.products.find((product) => product.id_prod?._id === id);
-        console.log("Existing Product:", existingProduct); // Agrega este console.log
+      }
+  
+      console.log("Existing Product:", existingProduct);
+  
+      if (existingProduct !== undefined) {
+        // Verifica si existingProduct no es undefined ni null
         console.log("Existing product cantidad:", existingProduct.quantity);
         console.log("Existing Product Details:", existingProduct?.id_prod);
-        console.log("ID del Producto Buscado:", id); // Agrega este console.log
-      } else {
-        console.log("No hay productos en el carrito o la estructura de datos es incorrecta.");
-      }
+        console.log("ID del Producto Buscado:", id);
   
-      if (existingProduct) {
-        // Si el producto ya existe, realiza una actualización (PUT)
-    
+        // Si el producto ya existe y tiene una cantidad definida, realiza una actualización (PUT)
         const updatedQuantity = existingProduct.quantity + 1;
-        console.log("Updated Quantity:", updatedQuantity); // Agrega este console.log
+        console.log("Updated Quantity:", updatedQuantity);
+      
+        // Actualiza el estado local del producto
+        setProduct(prevProduct => ({ ...prevProduct, quantity: updatedQuantity }));
+      
+        // Realiza la actualización en el carrito
         await updateCartItemQuantity(cartId, id, updatedQuantity);
       } else {
-        // Si el producto no existe, realiza una inserción (POST)
+        // Si el producto no existe o no tiene una cantidad definida, realiza una inserción (POST)
         await addProductToCart(cartId, id);
+      
+        // Actualiza el estado local del producto
+        setProduct(prevProduct => ({ ...prevProduct, quantity: 1 }));
       }
+      
+  
   
       console.log("Product added to cart successfully");
       alert("Producto agregado al carrito correctamente");
@@ -117,6 +125,7 @@ const ProductDetail = () => {
     } catch (error) {
       console.error("Error adding product to cart:", error);
     }
+   
   };
 
   return (

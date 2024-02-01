@@ -57,7 +57,7 @@ const NavBar = () => {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Link to="/productos" className="nav-item nav-link">
+                  <Link to="/products" className="nav-item nav-link">
                     Productos
                   </Link>
                   {isLogeado ? (
