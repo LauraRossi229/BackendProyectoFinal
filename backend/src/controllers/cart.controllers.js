@@ -355,6 +355,9 @@ export const postCompra = async (req, res) => {
     return res.status(200).json({
       message: "Compra finalizada exitosamente",
       productsNotProcessed: productsNotProcessed,
+      amount: totalAmount, // Usa el monto total calculado
+      purchaser: user.email,
+      ticket: ticket.code,
     });
   } catch (error) {
     console.error(error);

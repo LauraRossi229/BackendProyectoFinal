@@ -6,7 +6,7 @@
   export const LogProvider = ({ children }) => {
     const [isLogeado, setIsLogeado] = useState(false);
     const [cartId, setCartId] = useState(null);
-
+    const [rol, setRol] = useState(null);
     return (
       <LogContext.Provider value={{ isLogeado, setIsLogeado, cartId, setCartId }}>
         {children}

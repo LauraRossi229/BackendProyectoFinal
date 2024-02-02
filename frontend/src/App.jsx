@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { LogProvider } from "./components/LogContext";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
 import ShoppingBag from "./components/ShoppingBag/ShoppingBag";
+import Purchase from "./components/ShoppingBag/Purchase";
 import Home from "./components/Home/Home";
 import ResetPasswordPage from "./components/ResetPasswordPage/ResetPasswordPage";
 import ResetPasswordRequest from "./components/ResetPasswordRequest/ResetPasswordRequest";
@@ -28,6 +29,7 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/productdetail/:id" element={<ProductDetail />} />
           <Route path="/carrito" element={<ShoppingBag />} />
+          <Route path="/purchase" element={<Purchase />} />
           <Route
             path="/reset-password-request"
             element={<ResetPasswordRequest />}

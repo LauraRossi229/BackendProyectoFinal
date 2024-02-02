@@ -200,8 +200,12 @@ export const deleteInactiveUsers = async (req, res) => {
     // Obtener la fecha actual
     const currentDate = new Date();
 
-    // Definir el límite de inactividad (30 minutos en este ejemplo)
-    const inactivityLimit = new Date(currentDate - 30 * 60000);
+    // Definir el límite de inactividad (30 minutos en este ejemplo) Esto se uso para las pruebas.
+   // const inactivityLimit = new Date(currentDate - 30 * 60000); 
+
+    // Definir el límite de inactividad de 48 horas.
+    const inactivityLimit = new Date(currentDate.getTime() - 2 * 24 * 60 * 60 * 1000);
+
 
     // Encontrar usuarios inactivos
     const inactiveUsers = await userModel.find({

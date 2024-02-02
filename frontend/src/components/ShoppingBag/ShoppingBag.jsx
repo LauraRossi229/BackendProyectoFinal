@@ -3,6 +3,9 @@ import "./ShoppingBag.scss";
 import { useParams } from "react-router-dom";
 import { LogContext } from "../LogContext"; // Asegúrate de la ruta correcta a tu LogContext
 import { Button, ListGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import MyComponent from "./MyComponent";
+
 
 const ShoppingBag = () => {
   const [carrito, setCarrito] = useState({});
@@ -48,18 +51,32 @@ const ShoppingBag = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center">
-                <p className="mr-4">Precio: ${producto.id_prod.price}</p>
-                <p className="mr-4">
-                  Cantidad: 
-                  <input
-                    type="number"
-                    value={producto.quantity}
-                    onChange={(e) => handleCantidadChange(producto.id, e.target.value)}
-                  />
-                </p>
-                <Button variant="danger" onClick={() => handleEliminarProducto(producto.id)}>
-                  Eliminar
-                </Button>
+                <div className="row">
+                  <div className="col-md-6">
+                    <p className="mr-4 mb-2">
+                      Cantidad: 
+                      <input
+                        type="number"
+                        value={producto.quantity}
+                        onChange={(e) => handleCantidadChange(producto.id, e.target.value)}
+                        className="form-control d-inline-block"
+                      />
+                    </p>
+                  </div>
+                  <div className="col-md-6">
+                    <p className="mb-0">Precio:</p>
+                    <p className="mt-0">${producto.id_prod.price}</p>
+                  </div>
+                </div>
+
+                {/* MyComponent se utiliza para manejar la lógica de eliminación del producto */}
+                 {/* MyComponent se utiliza para manejar la lógica de eliminación del producto */}
+                 <MyComponent
+                  cartId={cartId}  // Pasando cartId como prop
+                  productId={producto.id_prod._id}  // Pasando solo el id del producto como prop
+                  handleEliminarProducto={handleEliminarProducto}
+                />
+
               </div>
             </ListGroup.Item>
           ))}
@@ -68,9 +85,13 @@ const ShoppingBag = () => {
         <p>El carrito está vacío.</p>
       )}
 
-      <div className="carrito-buttons mt-3">
-        <Button variant="success" onClick={handleAceptarCompra}>Aceptar Compra</Button>
-        <Button variant="primary" onClick={() => history.push("/products")}>Volver a Productos</Button>
+<div className="carrito-buttons mt-3">
+        <Button variant="success" onClick={handleAceptarCompra}>
+          <Link to="/purchase" style={{ color: 'white', textDecoration: 'none' }}>
+            Aceptar Compra
+          </Link>
+        </Button>
+        <Button variant="primary" as={Link} to="/products">Seguir Comprando</Button>
       </div>
     </div>
   );

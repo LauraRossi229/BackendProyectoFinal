@@ -53,9 +53,30 @@ export const postCompra = async (req, res) => {
     return res.status(200).json({
       message: "Compra finalizada exitosamente",
       productsNotProcessed: productsNotProcessed,
+      
     });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error al procesar la compra" });
+  }
+};
+
+
+
+export const getTicketDetails = async (req, res) => {
+  const ticketId = req.params.ticketId;
+
+  try {
+    // Busca el ticket por ID
+    const ticket = await Ticket.findById(ticketId);
+
+    if (!ticket) {
+      return res.status(404).json({ message: 'Ticket no encontrado' });
+    }
+
+    return res.status(200).json(ticket);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Error al obtener los detalles del ticket' });
   }
 };

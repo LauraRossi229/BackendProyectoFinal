@@ -146,3 +146,5 @@
 [31mfatal[39m: GET es /api/carts/65bbb396e4d2c77cd66c3078/id/64fcb27e4e10f176b4826194 - 13:09:37
 [31mfatal[39m: GET es /api/carts/657bcc0f8e7ab9d4c226ac7a/products/64fca7e15b100d5e10f55853 - 13:22:23
 [31mfatal[39m: GET es /api/carts/657bcc0f8e7ab9d4c226ac7a/products/64fca7e15b100d5e10f55853 - 13:22:23
+[31mfatal[39m: GET es /assets/icon.svg - 21:57:31
+[31mfatal[39m: GET es /assets/icon.svg - 21:57:31
