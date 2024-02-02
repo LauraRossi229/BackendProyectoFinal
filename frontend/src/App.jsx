@@ -16,6 +16,7 @@ import ResetPasswordPage from "./components/ResetPasswordPage/ResetPasswordPage"
 import ResetPasswordRequest from "./components/ResetPasswordRequest/ResetPasswordRequest";
 import ResetPasswordConfirm from "./components/ResetPasswordConfirm/ResetPasswordConfirm";
 import ConfirmPasswordChange from "./components/ConfirmPasswordChange/ConfirmPasswordChange";
+import Admin from "./components/UserAdmin/admin";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/productdetail/:id" element={<ProductDetail />} />
           <Route path="/carrito" element={<ShoppingBag />} />
           <Route path="/purchase" element={<Purchase />} />
+          <Route path="/admin" element={<Admin />} />
           <Route
             path="/reset-password-request"
             element={<ResetPasswordRequest />}

@@ -13,7 +13,7 @@ const LoginRegister = () => {
   };
   /*const { login } = useAuth();  // Obtener la función de login del contexto*/
   const navigate = useNavigate();
-  const { setIsLogeado, setCartId } = useContext(LogContext);
+  const { setIsLogeado, setCartId, setAdminToken} = useContext(LogContext);
   const loginFormRef = useRef(null);
   const registerFormRef = useRef(null);
 
@@ -48,8 +48,10 @@ const LoginRegister = () => {
       document.cookie = `jwtCookie=${datos.token}; expires=${new Date(
         Date.now() + 1 * 24 * 60 * 60 * 1000
       ).toUTCString()};path=/;`;
-
+      
+       
         const token = datos.token
+      
         // Decodificar el token JWT
         const tokenParts = token.split('.');
         const encodedPayload = tokenParts[1];
@@ -57,12 +59,22 @@ const LoginRegister = () => {
         
         // Obtener el campo 'cart' desde el objeto decodificado
         const cartId = decodedPayload.user.cart;
+        const rol = decodedPayload.user.rol;
+        const adminToken = datos.token;
         
+
         console.log("Información del carrito:", cartId);
-     
+        console.log("Información del carrito:", rol);
+
       setIsLogeado(true);
       setCartId(cartId);
-      navigate("/products");
+      setAdminToken(adminToken) 
+      
+      if (rol === 'admin') {
+        navigate("/admin"); // Modificado: Reemplaza "/admin" con la ruta correcta de tu vista admin.jsx
+      } else {
+        navigate("/products");
+      }
     } else {
       console.log(response);
     }
